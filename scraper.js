@@ -45,6 +45,12 @@ async function scrapePage() {
 
 function compareImages() {
     const img1 = PNG.sync.read(fs.readFileSync('currentPage.png'));
+    if (!fs.existsSync('previousPage.png')) {
+        fs.copyFileSync('currentPage.png', 'previousPage.png', (err) => {
+            if (err) throw err;
+            console.log('copying file');
+        });
+    }
     const img2 = PNG.sync.read(fs.readFileSync('previousPage.png'));
     const {width, height} = img1;
     const diff = new PNG({width, height});
@@ -56,19 +62,20 @@ function compareImages() {
 
 function checkPageForUpdate() {
     console.log('\n***********************\nChecking page ' + (new Date()).toJSON().slice(0, 19).replace(/[-T]/g, ':'));
-    scrapePage();
-    numOfDiffPixels = compareImages()
-    if (numOfDiffPixels > diffThreshold) {
-        console.log('CHANGE DETECTED: ' + numOfDiffPixels);
-        sendEmail();
-        fs.copyFile('currentPage.png', 'previousPage.png', (err) => {
-            if (err) throw err;
-            //console.log('currentPage.png was copied to previousPage.png');
+    scrapePage().then(() => {
+        numOfDiffPixels = compareImages()
+        if (numOfDiffPixels > diffThreshold) {
+            console.log('CHANGE DETECTED: ' + numOfDiffPixels);
+            sendEmail();
+            fs.copyFile('currentPage.png', 'previousPage.png', (err) => {
+                if (err) throw err;
             });
-    } 
-    else {
-        console.log('No change');
-    }
+        } 
+        else {
+            console.log('No change');
+        }
+    });
+    
 }
 
 var runInterval = intervalMinutes * 60 * 1000;
