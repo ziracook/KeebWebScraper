@@ -3,12 +3,12 @@ const fs = require('fs');
 const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
 const nodemailer = require("nodemailer");
+const config = require("./emailConfig.json");
 
 diffThreshold = 800;
 var intervalMinutes = 5;
 
 async function sendEmail() {
-    var config = JSON.parse(fs.readFileSync('emailConfig.json', 'utf8'));
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
