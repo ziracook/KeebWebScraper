@@ -1,4 +1,6 @@
-# KeebScraper
+# KeebWebScraper
+
+*Keeb: an abbreviation of the word keyboard, typically used in the mechanical keyboard community*
 
 The custom keyboard community is notorious for having parts sell out fast before you even knew they went up for sale.
 This script was designed to help me determine when a keyboard I wanted was back in stock, however, this script could be used to detect changes in any webpage.
