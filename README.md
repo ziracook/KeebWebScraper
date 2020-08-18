@@ -13,3 +13,20 @@ Basics of how it works:
 - Compare the new screenshot to the last captured screenshot using PixelMatch.
 - If the screenshots differ within the pixel threshold, send an email alert.
 - If the screenshots aren't different, wait for an interval of time (5 minutes) and look again.
+
+
+Local Setup:
+- Clone the repo
+  > git clone https://github.com/ziracook/KeebScraper.git
+- Install the libraries
+  > npm install puppeteer
+  > npm install pixelmatch
+  > npm install nodemailer
+- Duplicate *currentPage.png* and name the duplicate *previousPage.png*
+- *emailConfig.json* will need to be configured with two email adresses, one to send and one to recieve.
+  - Create or use a previously existing dev email
+  - To use a Gmail account to send an alert email, it cannot have 2FA enabled because you must set it to allow use from less secure apps.
+  - See this NodeMailer doc for more information: https://nodemailer.com/usage/using-gmail/
+- Run the script
+  > node scraper.js
+  
