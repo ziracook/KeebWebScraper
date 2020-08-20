@@ -46,7 +46,7 @@ async function scrapePage() {
 function compareImages() {
     const img1 = PNG.sync.read(fs.readFileSync('currentPage.png'));
     if (!fs.existsSync('previousPage.png')) {
-        fs.copyFileSync('currentPage.png', 'previousPage.png', (err) => {
+        fs.copyFileSync('currentPage.png', 'previousPage.png', 0, (err) => {
             if (err) throw err;
             console.log('copying file');
         });
